@@ -10,7 +10,7 @@ class Server: # Main server class with all pages in
         status = '200 OK' # This is the response status code
         headers = [("Content-type", "text/plain")] # Web page headers
         start_response(status, headers) # No idea what this does, but it is required
-        yield body # Yield whatever is in the body
+        yield body # Yield whatever is in the body (i.e. the content of the page)
 
     def request(self, environ, start_response): # Request page
         address = environ["REMOTE_ADDR"] # Get the IP address of the client
@@ -20,7 +20,7 @@ class Server: # Main server class with all pages in
         status = '200 OK' # This is the response status code
         headers = [("Content-type", "text/plain")] # Web page headers
         start_response(status, headers) # No idea what this does, but it is required
-        yield body # Yield whatever is in the body
+        yield body # Yield whatever is in the body (i.e. the content of the page)
 
     def private(self, envrion, start_response): # Private page
         address = envrion["REMOTE_ADDR"] # Get the IP address of the client
@@ -32,15 +32,15 @@ class Server: # Main server class with all pages in
             status = '200 OK' # This is the response status code
             headers = [("Content-type", "text/plain")] # Web page headers
             start_response(status, headers) # No idea what this does, but it is required
-            yield body # Yield whatever is in the body
+            yield body # Yield whatever is in the body (i.e. the content of the page)
         else: # If the username and password are incorrect
             body = b"Forbidden" # This is the content of the page
             status = '401 Unauthorized' # This is the response status code
             headers = [("Content-type", "text/plain")] # Web page headers
             start_response(status, headers) # No idea what this does, but it is required
-            yield body # Yield whatever is in the body
+            yield body # Yield whatever is in the body (i.e. the content of the page)
     
-ServerClass = Server("TESTUSER", "123") # Create a server object with username and password as parameters
+ServerClass = Server("TEST_USER", "123") # Create a server object with username and password as parameters
 
 d = wsgiserver.WSGIPathInfoDispatcher({ # Create a dictionary of the pages and functions relating to them
             "/": ServerClass.main,
